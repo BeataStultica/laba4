@@ -41,5 +41,41 @@ def read_rows(path):
 	new_head += bmp[38::]
 
 	new_image = open("new_bmp.bmp", 'wb')
+#	new_image.write(bmp)
 	new_image.write(new_head)
+
+	while True:
+		if pixel_index == width:
+			pixel_index = 0
+			for i in range(coint):
+				rows += row
+
+#				new_image.write(row + b'\x00'*((3*width*coint) % 4))
+				new_image.write(row)
+#				for j in range((3*width*coint) % 4):
+#				image_file.read(1)
+#				new_image.write(row)
+			row = b''
+		pixel_index += 1
+
+		r = image_file.read(1)
+		g = image_file.read(1)
+		b = image_file.read(1)
+
+		if len(r) == 0:
+			break
+
+		if len(g) == 0:
+			break
+
+		if len(b) == 0:
+			break
+
+		for i in range(coint):
+			row += r + g + b
+
+	new_image.close()
+	print(rows)
+	image_file.close()
+	return rows
 a = read_rows('test5.bmp')
